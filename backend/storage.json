@@ -1,0 +1,26 @@
+{
+    "aktivnosti": [
+        {
+            "aktivnostId": "dfkakjl12",
+            "pocetniDatum": "2021-01-10",
+            "od": "8:15",
+            "do": "10:20",
+            "danima": [
+                "utorak",
+                "sreda",
+                "petak"
+            ]
+        }
+    ],
+    "predmeti": [
+        {
+            "predmetId": "dfka12k12",
+            "naziv": "predmet1",
+            "brojStrana": 5433,
+            "procitano": 0,
+            "vremePoStrani": 6,
+            "pocetak": "2021-02-12",
+            "kraj": "2021-02-12"
+        }
+    ]
+}
