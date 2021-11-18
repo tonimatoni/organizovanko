@@ -1,14 +1,23 @@
 {
     "aktivnosti": [
         {
-            "aktivnostId": "dfkakjl12",
-            "pocetniDatum": "2021-01-10",
-            "od": "8:15",
-            "do": "10:20",
+            "aktivnostId": "sdG7sC6E2M",
+            "naziv": "nastava",
+            "od": "14:00",
+            "do1": "18:00",
+            "pocetniDatum": "2021.01.02",
             "danima": [
-                "utorak",
-                "sreda",
-                "petak"
+                "svi"
+            ]
+        },
+        {
+            "aktivnostId": "ydp0D8hZIt",
+            "naziv": "nastava",
+            "od": "14:00",
+            "do1": "18:00",
+            "pocetniDatum": "2021.01.02",
+            "danima": [
+                "svi"
             ]
         }
     ],
@@ -21,6 +30,15 @@
             "vremePoStrani": 6,
             "pocetak": "2021-02-12",
             "kraj": "2021-02-12"
+        },
+        {
+            "predmetId": "Yd2wRCh9KJ",
+            "naziv": "nastava",
+            "brojStrana": null,
+            "procitano": 0,
+            "vremePoStrani": null,
+            "pocetak": "2021.18.11",
+            "kraj": null
         }
     ]
 }
