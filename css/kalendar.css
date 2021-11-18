@@ -1,0 +1,165 @@
+/* global styles*/
+body{
+  margin: 0px;
+  padding: 0px;
+  color:white;
+  font-family: Inter;
+}
+ul{
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+p{
+  margin:0px;
+  padding: 0px;
+}
+
+
+/* main-container */
+main.main-container{
+  width: 100%;
+  background-color: white;
+  display: flex;
+  height:100vh;
+}
+
+/* left div*/
+div.left{
+  width:20%;
+  background-color: rgb(24,24,27);
+  flex-direction: row;
+  padding-left: 15px;
+  padding-right: 15px;;
+}
+/*header*/
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0px 0px 0px;
+  margin-bottom: 15px;
+}
+header div.logo-div{
+  width: 20%;
+}
+header .add-button span{
+  color:white;
+  font-weight: 900;
+  background-color: rgb(45,45,48);
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 25%;
+}
+/* end of header */
+
+/* kalendar */
+
+/*kalendar header */
+.calendar-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  _color: rgb(204,204,205);
+  color:white;
+  font-size: 25px;
+  font-family: Inter;
+  font-weight: bold;
+}
+.calendar-header img{
+  width:25px;
+  height: 25px;
+  vertical-align: middle;
+
+}
+.month span{
+  color: red;
+}
+/* kalendar header END */
+
+/*kalendar main start */
+div.calendar-main{
+  margin-top: 20px;
+  color:#b3a788;
+}
+.cal-header, .cal-body{
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+.cal-header li, .cal-body li{
+  width: 10.28%;
+  text-align: center;
+
+
+}
+.cal-body{
+  color:white;
+}
+.cal-body li.no-active{
+  color:#b3a788;
+}
+.cal-body li.today{
+  color:#b3a788;
+  background-color: blue;
+  border-radius: 50%;
+}
+
+
+/*kalendar main end */
+
+
+/* end of kalendar*/
+
+/*start of today*/
+div.danas {
+  text-align: center;
+  color: rgb(59,130,246);
+  margin-bottom: 15px;
+}
+
+
+
+/* end of today*/
+
+/* start aktivnosti */
+
+div.aktivnosti{
+
+  display: flex;
+  align-items: baseline;
+}
+div.aktivnosti .circle-div{
+  margin-right: 10px;
+}
+div.aktivnosti span.circle{
+  display: inline-block;
+  width:15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: rgb(59,130,246);
+  vertical-align: top;
+  margin-top: 2px;
+}
+.info-div .time{
+    vertical-align: top;
+}
+div.aktivnosti img{
+  width: 18px;
+  height: 18px;
+}
+
+
+/* end of aktivnosti */
+
+/*end of left div*/
+div.right{
+  width:80%;
+}
+
+
+/*helper classes*/
+.img-wrap img{
+  width:100%;
+}
