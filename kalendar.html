@@ -30,11 +30,11 @@
         <!-- Calendar header START -->
         <div class="calendar-header">
           <div class="month">
-            Novembar <span>2021.</span>
+            <span id="month-name">Novembar</span> <span id="year">2021.</span>
           </div>
           <div class="arrows">
-            <img src="images/arrow-left.png" alt="">
-            <img src="images/arrow-right.png" alt="">
+            <img src="images/arrow-left.png" id="left-arrow" alt="">
+            <img src="images/arrow-right.png" id="right-arrow" alt="">
           </div>
         </div>
         <!-- Calendar header END -->
@@ -51,15 +51,36 @@
             <li class="cal-header-cells">NED</li>
           </ul>
           <ul class="cal-body">
-            <li class="cal-body-cells no-active">1</li>
-            <li class="cal-body-cells no-active">1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+
+            <div class="break"></div>
+
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+            <li class="cal-body-cells">-1</li>
+
+            <div class="break"></div>
+
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
-          </ul>
-          <ul class="cal-body">
+            <li class="cal-body-cells">1</li>
+            <li class="cal-body-cells">1</li>
+
+            <div class="break"></div>
+
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
@@ -67,8 +88,9 @@
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
-          </ul>
-          <ul class="cal-body">
+
+            <div class="break"></div>
+
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
@@ -76,15 +98,16 @@
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
-          </ul>
-          <ul class="cal-body">
+
+            <div class="break"></div>
+
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
-            <li class="cal-body-cells today">1</li>
             <li class="cal-body-cells">1</li>
             <li class="cal-body-cells">1</li>
-            <li class="cal-body-cells no-active">1</li>
+            <li class="cal-body-cells">1</li>
+            <li class="cal-body-cells">1</li>
           </ul>
         </div>
 
@@ -94,7 +117,7 @@
 
       <!-- TODAY START -->
       <div class="danas">
-        <p> <b>DANAS</b> 11/18/2021</p>
+        <p> <b>DANAS</b> <span id="current-date-string">11/18/2021</span></p>
 
       </div>
 
@@ -118,6 +141,8 @@
       desno
     </div>
   </main>
+
+  <script src="javascript/kalendar.js"></script>
 </body>
 
 </html>
