@@ -2,7 +2,6 @@
 $storage = json_decode(file_get_contents("../storage.json"), true);
 
 $predmeti = $storage['predmeti'];
-
 /**
  *  predmetId - GENERISMO NA BEKU
  *  naziv
@@ -17,7 +16,7 @@ $id = generateRandomString(10);
 $naziv = $_POST['naziv'];
 $brojStrana = $_POST['brojStrana'];
 $vremePoStrani = $_POST['vremePoStrani'];
-$pocetak = date('Y.d.m');
+$pocetak = date('Y-m-d');
 $kraj = $_POST['kraj'];
 
 // Ovde pravimo objekat za noviPredmet koji ce se dodati u bazu
@@ -26,6 +25,7 @@ $noviPredmet = [
     'naziv' => $naziv,
     'brojStrana' => $brojStrana,
     'procitano' => 0,
+    'kad' => calculateKad($predmeti, $kraj, $pocetak),
     'vremePoStrani' => $vremePoStrani,
     'pocetak' => $pocetak,
     'kraj' => $kraj
@@ -50,4 +50,16 @@ function generateRandomString($length = 10)
         $randomString .= $characters[mt_rand(0, $charactersLength - 1)];
     }
     return $randomString;
+}
+
+function calculateKad($predmeti, $kraj, $pocetak)
+{
+    $kadZapravo = 7;
+    $preostaloDana = (strtotime($kraj) - strtotime($pocetak)) / 86400;
+    foreach ($predmeti as $key => $predmet) {
+        echo ($predmet['brojStrana'] * $predmet['vremePoStrani'] / 60);
+        $kadZapravo = ceil($predmet['kad'] + ($predmet['brojStrana'] * $predmet['vremePoStrani'] / 60) / $preostaloDana);
+        # code...
+    }
+    return $kadZapravo;
 }

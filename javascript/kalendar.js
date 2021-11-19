@@ -1,6 +1,8 @@
 const months = ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"];
 const days = ["Pon", "Uto", "Sre", "Cet", "Pet", "Sub", "Ned"];
 const activeDates = [];
+let sviPredmeti = [];
+let sveAktivnosti = [];
 const today = new Date();
 let selectedDate = today;
 let monthID = 0;
@@ -63,18 +65,20 @@ function addCalendarListeners() {
 
 
 }
-function addDivs(parent, minutiTrajanje, korak, poruka) {
+function addDivs(parent, minutiTrajanje, korak, naziv, boja) {
   for (let i = 0; i < korak / minutiTrajanje; i++) {
     let div = document.createElement('div');
     div.classList.add('fh');
     //div.innerHTML = sati + "" + minuti;
     //if (i == 0) div.innerHTML += "0";
-    div.innerHTML += poruka;
+    div.innerHTML += naziv;
     div.style.flexBasis = ((minutiTrajanje / 30) * 100) + "%";
 
     if (korak == minutiTrajanje) {
       div.style.flexBasis = "50%";
     }
+
+    div.style.backgroundColor = boja;
     //console.log(getTimeFromFirstColumn(timeDiv.innerHTML).toString());
     //timeDiv.classList.add('time-div');
     parent.appendChild(div);
@@ -119,10 +123,20 @@ function setEventListenersForRow(calbodyLis, time) {
       //parent, minut, korak u kalendaru
       addDivs(this, 30, 30, nazivAktivnosti);
 
-      dodajAktivnost(naziv, time, do1, formatDate(selectedDate), [])
+      dodajAktivnostiUBazu(naziv, time, 30, formatDate(selectedDate), [])
     });
   }
 }
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 function rightCalendarClick(time, date) {
 
   alert(formatDate(date) + ",hours:" + time);
@@ -208,7 +222,6 @@ function setRightDays() {
   }
   console.log(activeDates);
   // test
-  addDivs(allRightDivs[4][2], 180, 30, 'TESTIRAMO!!!')
 
 }
 // postavlja datume u left kalendar od 1 do 30 ili 31 zavisi koliko dana ima
@@ -345,4 +358,119 @@ function setYear() {
   yearText.innerHTML = year;
 }
 
+/**
+ * 
+ * @param {*} params.time 
+ * @param {*} params.dayIndex 
+ */
+function getExactDivOutOfArray(params) {
+  console.log(params);
+  return allRightDivs[params.time - 7][params.dayIndex + 1]
+}
 
+/**
+ * 
+ * @param {*} params.vremeTrajanja 
+ * @param {*} params.korak 
+ * @param {*} params.time 
+ * @param {*} params.dayIndex 
+ */
+function getDivsToPopulate(params) {
+
+  const toPopulate = [];
+  const brojDivova = params.vremeTrajanja / (params.korak * 2);
+  console.log(brojDivova);
+  for (let index = 0; index <= Math.floor(brojDivova); index++) {
+    toPopulate.push(getExactDivOutOfArray({ dayIndex: params.dayIndex, time: params.time + index }))
+  }
+  return toPopulate;
+}
+
+/**
+ * 
+ * @param {*} params.vremeTrajanja 
+ * @param {*} params.korak 
+ * @param {*} params.time 
+ * @param {*} params.dayIndex 
+ */
+function populateDivs(params) {
+  const {
+    vremeTrajanja,
+    naziv
+  } = params;
+  let vremeTrajanjaTemp = vremeTrajanja;
+  const divsToPopulate = getDivsToPopulate(params);
+  divsToPopulate.forEach((div, i) => {
+    addDivs(div, 30, 30, naziv, params.boja)
+    // if (i < divsToPopulate.length - 1)
+    //   addDivs(div, 30, 30, naziv)
+    vremeTrajanjaTemp -= 30;
+  })
+}
+
+function procitajPredmeteZaKalendar() {
+
+  $.ajax({
+    type: "GET",
+    url: "http://localhost/organizovanko/backend/predmet/procitaj.php",
+    dataType: "JSON",
+    success: function (response) {
+      sviPredmeti = response
+      response.forEach(p => {
+        const randomBoja = getRandomColor();
+        const brojDana = oduzmiDatume(Date.now(), Date.parse(p.kraj));
+        console.log('testsssss', Math.floor(p.brojStrana * p.vremePoStrani / oduzmiDatume(Date.now(), Date.parse(p.kraj))));
+
+        for (let index = 0; index < brojDana; index++) {
+          populateDivs({boja: randomBoja, vremeTrajanja: Math.floor(p.brojStrana * p.vremePoStrani / oduzmiDatume(Date.now(), Date.parse(p.kraj))) - 1, korak: 30, time: parseInt(p.kad), dayIndex: getDayIndex(new Date().addDays(index)), naziv: p.naziv })
+        }
+      })
+    }
+  });
+}
+procitajPredmeteZaKalendar()
+
+function roundToHalf(value) {
+  var converted = parseFloat(value); // Make sure we have a number
+  var decimal = (converted - parseInt(converted, 10));
+  decimal = Math.round(decimal * 10);
+  if (decimal == 5) { return (parseInt(converted, 10) + 0.5); }
+  if ((decimal < 3) || (decimal > 7)) {
+    return Math.round(converted);
+  } else {
+    return (parseInt(converted, 10) + 0.5);
+  }
+}
+function dodajAktivnostiUBazu(naziv, od, do1, pocetniDatum, danima) {
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost/organizovanko/backend/aktivnost/dodaj.php",
+    data: {
+      naziv: naziv,
+      od: od,
+      do1: do1,
+      pocetniDatum: pocetniDatum,
+      danima: danima,
+
+    },
+    dataType: "JSON",
+    success: function (response) {
+
+    }
+  });
+};
+
+function oduzmiDatume(dan1, dan2) {
+  var day1 = dan1;
+  var day2 = dan2;
+  var difference = Math.abs(day2 - day1);
+  brojDana = difference / (1000 * 3600 * 24)
+  return brojDana;
+}
+
+Date.prototype.addDays = function (days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
