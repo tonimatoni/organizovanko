@@ -1,6 +1,6 @@
 const months = ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"];
 const days = ["Pon", "Uto", "Sre", "Cet", "Pet", "Sub", "Ned"];
-const today= new Date();
+const today = new Date();
 let selectedDate = today;
 let monthID = 0;
 let year = 0;
@@ -11,34 +11,66 @@ var rightArrowCalendar = document.querySelector('#right-arrow');
 //uzimamo lijeve iz liste i popunjavamo ih odredjenomim datumom
 const daysLi = document.getElementsByClassName('cal-body-cells');
 const calHeaderRightLi = document.querySelectorAll('#cal-right-header li');
+const calBodyRightDivs7 = document.querySelectorAll('.cal-right-body.seven div');
+const calBodyRightDivs8 = document.querySelectorAll('.cal-right-body.eight div');
+const calBodyRightDivs9 = document.querySelectorAll('.cal-right-body.nine div');
+const calBodyRightDivs10 = document.querySelectorAll('.cal-right-body.ten div');
+const calBodyRightDivs11 = document.querySelectorAll('.cal-right-body.eleven div');
+const calBodyRightDivs12 = document.querySelectorAll('.cal-right-body.twelve div');
+const calBodyRightDivs13 = document.querySelectorAll('.cal-right-body.thirteen div');
 
 //addCalendarListeners(daysLi);
 leftArrowCalendar.addEventListener("click", navigateCalendar);
 rightArrowCalendar.addEventListener("click", navigateCalendar);
 window.onload = initializeCalendar;
 
-
+addCalendarListeners();
 
 
 
 // dodajemo listenere na kalnedar
-function addCalendarListeners(lis){
-  let dayCounter=1;
-  let g=getThisMonthNumberOfDays();
-  for(let i=0;i<lis.length;i++){
+function addCalendarListeners() {
+ // levi klaendar
+ /*  let dayCounter = 1;
+  let g = getThisMonthNumberOfDays();
+  for (let i = 0; i < lis.length; i++) {
 
 
-    lis[i].addEventListener("click",calendarClick);
+    lis[i].addEventListener("click", calendarClick);
     dayCounter++;
 
+  }*/
+  //desni kalendar
+
+  setEventListenersForRow(calBodyRightDivs7,7);
+  setEventListenersForRow(calBodyRightDivs8,8);
+  setEventListenersForRow(calBodyRightDivs9,9);
+  setEventListenersForRow(calBodyRightDivs10,10);
+  setEventListenersForRow(calBodyRightDivs11,11);
+  setEventListenersForRow(calBodyRightDivs12,12);
+  setEventListenersForRow(calBodyRightDivs13,13);
+
+
+}
+function setEventListenersForRow(calbodyLis,time){
+  for(let i=1;i<calbodyLis.length;i++){
+    calbodyLis[i].addEventListener("click",function(){
+      console.log(calHeaderRightLi[i].querySelector('p').innerHTML);
+    //  selectedDate.setDate(calHeaderRightLi[i].querySelector('p').innerHTML);
+      selectedDate.setDate(calHeaderRightLi[i].querySelector('p').innerHTML);
+      rightCalendarClick(time,selectedDate);
+    });
   }
 }
+function rightCalendarClick(time,date){
 
+  alert(formatDate(date)+",hours:"+time);
+}
 // klikom na neko polje u kalendaru, selektujemo danasnji datum
-function calendarClick(){
-let newDate = new Date(year, monthID, this.innerHTML);
-selectedDate=newDate;
-setLeftDays();
+function calendarClick() {
+  let newDate = new Date(year, monthID, this.innerHTML);
+  selectedDate = newDate;
+  setLeftDays();
 }
 // pomocu leve i desne strelice odredjuje koji je mesec i godina
 function navigateCalendar() {
@@ -62,6 +94,10 @@ function navigateCalendar() {
   } else {
     alert("ovo ne sme nikako");
   }
+  selectedDate=new Date();
+  selectedDate.setDate(1);
+  selectedDate.setFullYear(year);
+  selectedDate.setMonth(monthID);
   //selectedDate=today;
   setMonthName();
   setLeftDays();
@@ -81,16 +117,31 @@ function initializeCalendar() {
   setYear();
   setToday();
   setLeftDays();
-  setRightDays();
+
+
+
 
 
 
 }
 // postavlja datume u right kalendar u zavisnosti od levog kalendara
-function setRightDays(){
-  let dayIndex = getDayIndex();
+function setRightDays() {
+  let dayIndex = getDayIndex(selectedDate);
   console.log(dayIndex);
-  calHeaderRightLi[dayIndex].querySelector('p').innerHTML = selectedDate.getDate();
+
+  for(let i=1;i<=dayIndex;i++){
+      calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate()-dayIndex+i-1;
+      //calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
+  }
+  calHeaderRightLi[dayIndex+1].querySelector('p').innerHTML = selectedDate.getDate();
+//  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="red";
+
+  if(dayIndex<6){
+  for(let i=dayIndex+2;i<calHeaderRightLi.length-1;i++){
+      calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate()-dayIndex+i-1;
+    //  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
+  }}
+
 
 
 }
@@ -100,7 +151,7 @@ function setLeftDays() {
 
 
   //day index je index dana , ponedeljak 0 utorak 1 itd
-  let dayIndex = getDayIndex();
+  let dayIndex = getFirstDayIndex();
 
   // dobijamo koliko ima mesec pre dana , 31 30 28 ili 29
   let lastMonthDays = getLastMonthNumberOfDays();
@@ -108,35 +159,34 @@ function setLeftDays() {
 
   for (let i = 0; i < dayIndex; i++) {
     daysLi[i].classList.add('no-active');
-    daysLi[i].removeEventListener("click",calendarClick);
+    daysLi[i].classList.remove('selected');
+    daysLi[i].removeEventListener("click", calendarClick);
     daysLi[i].innerHTML = lastMonthDays - dayIndex + i + 1;
   }
   let dayCounter = 1;
   let thisMonthDays = getThisMonthNumberOfDays();
-  let newMonthCounter=1;
+  let newMonthCounter = 1;
   for (let i = dayIndex; i < daysLi.length; i++) {
     // proveravamo da li se radi u danasnjem mesecu ili smo presli u sledeci
     if (dayCounter <= thisMonthDays) {
       daysLi[i].innerHTML = dayCounter;
       daysLi[i].classList.remove('no-active');
-      daysLi[i].addEventListener("click",calendarClick);
+      daysLi[i].addEventListener("click", calendarClick);
 
       //da li smo naisli na danasnji dan
-      if(dayCounter==today.getDate() && monthID == today.getMonth() && year==today.getFullYear()){
+      if (dayCounter == today.getDate() && monthID == today.getMonth() && year == today.getFullYear()) {
         daysLi[i].classList.add('today');
 
-      }
-      else{
+      } else {
         daysLi[i].classList.remove('today');
       }
 
       // DA Li smo naisli na selektovani dan
-      if(dayCounter==selectedDate.getDate() && monthID==selectedDate.getMonth() && year==selectedDate.getFullYear()){
-          daysLi[i].classList.add('selected');
-          console.log(formatDate(selectedDate));
-      }
-      else{
-          daysLi[i].classList.remove('selected');
+      if (dayCounter == selectedDate.getDate() && monthID == selectedDate.getMonth() && year == selectedDate.getFullYear()) {
+        daysLi[i].classList.add('selected');
+        console.log(formatDate(selectedDate));
+      } else {
+        daysLi[i].classList.remove('selected');
 
       }
 
@@ -144,13 +194,14 @@ function setLeftDays() {
     } else { // presli smo u sledeci mesec
       daysLi[i].innerHTML = newMonthCounter++;
       daysLi[i].classList.add('no-active');
-      daysLi[i].removeEventListener("click",calendarClick);
+      daysLi[i].removeEventListener("click", calendarClick);
       /*if (i % 7 == 0) {
         break;
       }*/
     }
 
   }
+  setRightDays();
   // koliko ovaj mesec ima dana , 31, 30 , 28 29
 
 
@@ -169,7 +220,7 @@ function getLastMonthNumberOfDays() {
   return new Date(year, monthID, 0).getDate();
 }
 //vraca dan (ponedeljak, utorak, sreda) sa datim mesecom i prvim danom u mesecu
-function getDayIndex() {
+function getFirstDayIndex() {
 
   let firstDay = new Date(year, monthID, 1);
   //console.log(firstDay.toString()+"\n"+firstDay.getDay());
@@ -177,7 +228,15 @@ function getDayIndex() {
   if (firstDay.getDay() == 0) return 6;
   return firstDay.getDay() - 1;
 
+}
+// vraca dan od nekog datuma - pon utorak itd
+function getDayIndex(dejt) {
 
+
+  //console.log(firstDay.toString()+"\n"+firstDay.getDay());
+  if (dejt.getDay() == 1) return 0;
+  if (dejt.getDay() == 0) return 6;
+  return dejt.getDay() - 1;
 
 }
 
@@ -198,16 +257,18 @@ function increaseMonth(monthId) {
   }
 
 }
-function formatDate(date){
 
-  let stringic = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+function formatDate(date) {
+
+  let stringic = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
   return stringic;
 }
 // postavi mesec koji je izabran
-function setToday(){
-  var todayText=document.querySelector('.danas #current-date-string');
+function setToday() {
+  var todayText = document.querySelector('.danas #current-date-string');
   todayText.innerHTML = formatDate(today);
 }
+
 function setMonthName() {
   var monthText = document.querySelector('#month-name');
   monthText.innerHTML = months[monthID];
