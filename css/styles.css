@@ -1,0 +1,111 @@
+.col-md-4 {
+  background-color: gray;
+  padding: 10px;
+  height: 1000px;
+}
+.progress-bar {
+  position: relative;
+  width: 85%;
+  height: 3em;
+  background-color: rgb(48, 48, 48);
+  border-radius: 1.5em;
+  color: white;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.dodajPredmet {
+  margin-left: 30px;
+}
+
+.progress_container {
+  width: 85%;
+  height: 40px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background-color: rgb(48, 48, 48);
+  border-radius: 20px;
+  margin: 20px;
+}
+
+.progress_bar {
+  background-color: #f5c250;
+  width: 25%;
+  height: 30px;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  padding-top: 12px;
+}
+
+.progress-bar::before {
+  content: attr(data-label);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0.5em;
+  top: 0.5em;
+  bottom: 0.5em;
+  width: 25%;
+  background-color: #f5c250;
+
+  border-radius: 1em;
+  padding: 1em;
+}
+.col-md-4 h2 {
+  text-align: center;
+}
+.col-md-4 a {
+  color: black;
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: 550;
+}
+.col-md-4 a:hover {
+  color: #f5c250;
+  background-color: transparent;
+  text-decoration: none;
+}
+.col-md-8 a {
+  color: white;
+  background-color: black;
+  font-size: 14px;
+  font-weight: 150;
+  padding: 6px;
+  border-radius: 0.5em;
+}
+.col-md-8 a:hover {
+  color: #f5c250;
+  background-color: black;
+  text-decoration: none;
+}
+
+.col-md-8 p {
+  background-color: gray;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 65px;
+  width: 182px;
+  border-radius: 0.5em;
+}
+
+.input-group {
+  margin-top: 17px;
+}
+
+.modal-content {
+  background-color: #111215;
+}
+
+.input-group input,
+.input-group-prepend,
+.input-group select,
+.input-group-text {
+  background-color: #29292c;
+  color: aliceblue;
+}

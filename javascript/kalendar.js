@@ -1,5 +1,6 @@
 const months = ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"];
 const days = ["Pon", "Uto", "Sre", "Cet", "Pet", "Sub", "Ned"];
+const activeDates = [];
 const today = new Date();
 let selectedDate = today;
 let monthID = 0;
@@ -7,20 +8,20 @@ let year = 0;
 // testing promenljiva
 let trajanje = 30;
 //60/15 = 4, po 15 minuta ce biti aktivnosti
-let korak=30;
-function MyTime(startHour,startMin,endHour,endMin){
-  this.startMin=startMin;
-  this.endMin=endMin;
-  this.startHour=startHour;
-  this.endHour=endHour;
-  this.toString=function(){
+let korak = 30;
+function MyTime(startHour, startMin, endHour, endMin) {
+  this.startMin = startMin;
+  this.endMin = endMin;
+  this.startHour = startHour;
+  this.endHour = endHour;
+  this.toString = function () {
     return startHour + " " + startMin;
     //startHour+":"+startMin" - "+endHour+":"+endMin;
   }
   //this.isInRange = new function(majTajm){
-   //if(this.startHour>=majTajm.startHour && this.endHour<=majTajm.endHour&&this.startMin>=majTajm.startMin && this.endHour<=majTajm.endMin )return true;
-   //else return false;
- //}
+  //if(this.startHour>=majTajm.startHour && this.endHour<=majTajm.endHour&&this.startMin>=majTajm.startMin && this.endHour<=majTajm.endMin )return true;
+  //else return false;
+  //}
 }
 
 var leftArrowCalendar = document.getElementById('left-arrow');
@@ -36,7 +37,7 @@ const calBodyRightDivs10 = document.querySelectorAll('.cal-right-body.ten >li > 
 const calBodyRightDivs11 = document.querySelectorAll('.cal-right-body.eleven >li > div');
 const calBodyRightDivs12 = document.querySelectorAll('.cal-right-body.twelve >li > div');
 const calBodyRightDivs13 = document.querySelectorAll('.cal-right-body.thirteen >li > div');
-const allRightDivs = [calBodyRightDivs7,calBodyRightDivs8,calBodyRightDivs9,calBodyRightDivs10];
+const allRightDivs = [calBodyRightDivs7, calBodyRightDivs8, calBodyRightDivs9, calBodyRightDivs10, calBodyRightDivs11, calBodyRightDivs12.calBodyRightDivs13];
 
 //addCalendarListeners(daysLi);
 leftArrowCalendar.addEventListener("click", navigateCalendar);
@@ -52,26 +53,26 @@ addCalendarListeners();
 function addCalendarListeners() {
 
 
-  setEventListenersForRow(calBodyRightDivs7,7);
-  setEventListenersForRow(calBodyRightDivs8,8);
-  setEventListenersForRow(calBodyRightDivs9,9);
-  setEventListenersForRow(calBodyRightDivs10,10);
-  setEventListenersForRow(calBodyRightDivs11,11);
-  setEventListenersForRow(calBodyRightDivs12,12);
-  setEventListenersForRow(calBodyRightDivs13,13);
+  setEventListenersForRow(calBodyRightDivs7, 7);
+  setEventListenersForRow(calBodyRightDivs8, 8);
+  setEventListenersForRow(calBodyRightDivs9, 9);
+  setEventListenersForRow(calBodyRightDivs10, 10);
+  setEventListenersForRow(calBodyRightDivs11, 11);
+  setEventListenersForRow(calBodyRightDivs12, 12);
+  setEventListenersForRow(calBodyRightDivs13, 13);
 
 
 }
-function addDivs(parent, minutiTrajanje, korak) {
+function addDivs(parent, minutiTrajanje, korak, poruka) {
   for (let i = 0; i < korak / minutiTrajanje; i++) {
     let div = document.createElement('div');
     div.classList.add('fh');
     //div.innerHTML = sati + "" + minuti;
     //if (i == 0) div.innerHTML += "0";
-    div.innerHTML += " AM";
+    div.innerHTML += poruka;
     div.style.flexBasis = ((minutiTrajanje / 30) * 100) + "%";
 
-    if(korak==minutiTrajanje){
+    if (korak == minutiTrajanje) {
       div.style.flexBasis = "50%";
     }
     //console.log(getTimeFromFirstColumn(timeDiv.innerHTML).toString());
@@ -79,47 +80,52 @@ function addDivs(parent, minutiTrajanje, korak) {
     parent.appendChild(div);
   }
 }
-function getTimeFromFirstColumn(tekst){
+function getTimeFromFirstColumn(tekst) {
 
-  tekst=tekst.replace("AM","");
-  let br =[];
-  br=tekst.split(":");
-  let majtajm=new MyTime(parseInt(br[0]),parseInt(br[1]),null,null);
+  tekst = tekst.replace("AM", "");
+  let br = [];
+  br = tekst.split(":");
+  let majtajm = new MyTime(parseInt(br[0]), parseInt(br[1]), null, null);
   return majtajm;
 }
 // ovde uzimamo vreme i datum od kalendara i prikazujemo ga
-function setEventListenersForRow(calbodyLis,time){
+function setEventListenersForRow(calbodyLis, time) {
 
   // dinamicki na osnovu koraka delimo na vise kolona svako polje u tabeli  u zavisnosti od koraka vremena
-  for(let i=0;i<60/korak;i++){
-    let timeDiv=document.createElement('div');
-    timeDiv.innerHTML=time+":"+i*korak;
-    if(i==0)timeDiv.innerHTML+="0";
-    timeDiv.innerHTML+=" AM";
-    timeDiv.style.flexBasis=(korak/60*100)+"%";
+  for (let i = 0; i < 60 / korak; i++) {
+    let timeDiv = document.createElement('div');
+    timeDiv.innerHTML = time + ":" + i * korak;
+    if (i == 0) timeDiv.innerHTML += "0";
+    timeDiv.innerHTML += " AM";
+    timeDiv.style.flexBasis = (korak / 60 * 100) + "%";
     console.log(getTimeFromFirstColumn(timeDiv.innerHTML).toString());
     //timeDiv.classList.add('time-div');
     calbodyLis[0].appendChild(timeDiv);
 
   }
 
-  for(let i=1;i<calbodyLis.length;i++){
+  for (let i = 1; i < calbodyLis.length; i++) {
     //console.log(calbodyLis);
     // OVDE DAJEMO EVENTE POLJIMA U KALENDARU
-    calbodyLis[i].addEventListener("click",function(){
+    calbodyLis[i].addEventListener("click", function () {
       console.log(calHeaderRightLi[i].querySelector('p').innerHTML);
-    //  selectedDate.setDate(calHeaderRightLi[i].querySelector('p').innerHTML);
+      //  selectedDate.setDate(calHeaderRightLi[i].querySelector('p').innerHTML);
       selectedDate.setDate(calHeaderRightLi[i].querySelector('p').innerHTML);
-      rightCalendarClick(time,selectedDate);
+      rightCalendarClick(time, selectedDate);
 
+      console.log(time, selectedDate.toS);
+      const nazivAktivnosti = prompt('Unesi naziv aktivnost:', 'neopznata');
+      if (!nazivAktivnosti) return;
       //parent, minut, korak u kalendaru
-      addDivs(this,30,30);
+      addDivs(this, 30, 30, nazivAktivnosti);
+
+      dodajAktivnost(naziv, time, do1, formatDate(selectedDate), [])
     });
   }
 }
-function rightCalendarClick(time,date){
+function rightCalendarClick(time, date) {
 
-  alert(formatDate(date)+",hours:"+time);
+  alert(formatDate(date) + ",hours:" + time);
 }
 // klikom na neko polje u kalendaru, selektujemo danasnji datum
 function calendarClick() {
@@ -149,7 +155,7 @@ function navigateCalendar() {
   } else {
     alert("ovo ne sme nikako");
   }
-  selectedDate=new Date();
+  selectedDate = new Date();
   selectedDate.setDate(1);
   selectedDate.setFullYear(year);
   selectedDate.setMonth(monthID);
@@ -184,20 +190,25 @@ function setRightDays() {
   let dayIndex = getDayIndex(selectedDate);
   console.log(dayIndex);
 
-  for(let i=1;i<=dayIndex;i++){
-      calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate()-dayIndex+i-1;
-      //calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
+  for (let i = 1; i <= dayIndex; i++) {
+    calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate() - dayIndex + i - 1;
+    //calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
+
+    activeDates.push(selectedDate.getDate() - dayIndex + i - 1)
   }
-  calHeaderRightLi[dayIndex+1].querySelector('p').innerHTML = selectedDate.getDate();
-//  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="red";
+  calHeaderRightLi[dayIndex + 1].querySelector('p').innerHTML = selectedDate.getDate();
+  //  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="red";
 
-  if(dayIndex<6){
-  for(let i=dayIndex+2;i<calHeaderRightLi.length-1;i++){
-      calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate()-dayIndex+i-1;
-    //  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
-  }}
-
-
+  if (dayIndex < 6) {
+    for (let i = dayIndex + 2; i < calHeaderRightLi.length - 1; i++) {
+      calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate() - dayIndex + i - 1;
+      //  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
+      activeDates.push(selectedDate.getDate() - dayIndex + i - 1)
+    }
+  }
+  console.log(activeDates);
+  // test
+  addDivs(allRightDivs[4][2], 180, 30, 'TESTIRAMO!!!')
 
 }
 // postavlja datume u left kalendar od 1 do 30 ili 31 zavisi koliko dana ima
@@ -315,7 +326,7 @@ function increaseMonth(monthId) {
 
 function formatDate(date) {
 
-  let stringic = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+  let stringic = date.getFullYear() + "." + date.getDate() + "." + (date.getMonth() + 1);
   return stringic;
 }
 // postavi mesec koji je izabran
@@ -333,3 +344,5 @@ function setYear() {
   var yearText = document.querySelector('#year');
   yearText.innerHTML = year;
 }
+
+
