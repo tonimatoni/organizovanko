@@ -103,7 +103,9 @@ div.calendar-main {
   margin-top: 20px;
   color: #b3a788;
 }
-
+.cal-header{
+  margin-left: -5px;
+}
 .cal-header, .cal-body {
   display: flex;
   flex-wrap: wrap;
@@ -217,6 +219,7 @@ div.right div.header {
   padding: 10px;
   background-color: red;
   border-radius: 10px;
+  color:white;
 }
 
 /* end of header */
@@ -312,7 +315,7 @@ ul.cal-right-body li>div{
 }
 .fh, .sh{
   color: #0576FD!important;
-  background-color: red;
+  _background-color: red;
   font-size:12px;
   font-weight: 900;
   flex-basis: 50%;

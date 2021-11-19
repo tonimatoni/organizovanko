@@ -39,7 +39,7 @@ const calBodyRightDivs10 = document.querySelectorAll('.cal-right-body.ten >li > 
 const calBodyRightDivs11 = document.querySelectorAll('.cal-right-body.eleven >li > div');
 const calBodyRightDivs12 = document.querySelectorAll('.cal-right-body.twelve >li > div');
 const calBodyRightDivs13 = document.querySelectorAll('.cal-right-body.thirteen >li > div');
-const allRightDivs = [calBodyRightDivs7, calBodyRightDivs8, calBodyRightDivs9, calBodyRightDivs10, calBodyRightDivs11, calBodyRightDivs12.calBodyRightDivs13];
+const allRightDivs = [calBodyRightDivs7, calBodyRightDivs8, calBodyRightDivs9, calBodyRightDivs10, calBodyRightDivs11, calBodyRightDivs12,calBodyRightDivs13];
 
 //addCalendarListeners(daysLi);
 leftArrowCalendar.addEventListener("click", navigateCalendar);
@@ -118,7 +118,7 @@ function setEventListenersForRow(calbodyLis, time) {
       rightCalendarClick(time, selectedDate);
 
       console.log(time, selectedDate.toS);
-      const nazivAktivnosti = prompt('Unesi naziv aktivnost:', 'neopznata');
+      const nazivAktivnosti = prompt('Unesi naziv aktivnosti:', 'neopznata');
       if (!nazivAktivnosti) return;
       //parent, minut, korak u kalendaru
       addDivs(this, 30, 30, nazivAktivnosti);
@@ -139,7 +139,7 @@ function getRandomColor() {
 
 function rightCalendarClick(time, date) {
 
-  alert(formatDate(date) + ",hours:" + time);
+  //alert(formatDate(date) + ",hours:" + time);
 }
 // klikom na neko polje u kalendaru, selektujemo danasnji datum
 function calendarClick() {
@@ -205,7 +205,8 @@ function setRightDays() {
   console.log(dayIndex);
 
   for (let i = 1; i <= dayIndex; i++) {
-    calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate() - dayIndex + i - 1;
+    if(selectedDate.getDate() - dayIndex + i - 1<=0) calHeaderRightLi[i].querySelector('p').innerHTML = "";
+    else calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate() - dayIndex + i - 1;
     //calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
 
     activeDates.push(selectedDate.getDate() - dayIndex + i - 1)
@@ -215,9 +216,18 @@ function setRightDays() {
 
   if (dayIndex < 6) {
     for (let i = dayIndex + 2; i < calHeaderRightLi.length - 1; i++) {
+
+      console.log(new Date(year,monthID+1,0).getDate()+"Dr"+(selectedDate.getDate() - dayIndex + i - 1));
+      console.log();
+      if(new Date(year,monthID+1,0).getDate()<=selectedDate.getDate() - dayIndex + i - 1){
+        calHeaderRightLi[i].querySelector('p').innerHTML = ""
+      }
+      else{
       calHeaderRightLi[i].querySelector('p').innerHTML = selectedDate.getDate() - dayIndex + i - 1;
       //  calHeaderRightLi[dayIndex+1].querySelector('p').style.backgroundColor="white";
       activeDates.push(selectedDate.getDate() - dayIndex + i - 1)
+      }
+
     }
   }
   console.log(activeDates);
@@ -359,9 +369,9 @@ function setYear() {
 }
 
 /**
- * 
- * @param {*} params.time 
- * @param {*} params.dayIndex 
+ *
+ * @param {*} params.time
+ * @param {*} params.dayIndex
  */
 function getExactDivOutOfArray(params) {
   console.log(params);
@@ -369,11 +379,11 @@ function getExactDivOutOfArray(params) {
 }
 
 /**
- * 
- * @param {*} params.vremeTrajanja 
- * @param {*} params.korak 
- * @param {*} params.time 
- * @param {*} params.dayIndex 
+ *
+ * @param {*} params.vremeTrajanja
+ * @param {*} params.korak
+ * @param {*} params.time
+ * @param {*} params.dayIndex
  */
 function getDivsToPopulate(params) {
 
@@ -387,11 +397,11 @@ function getDivsToPopulate(params) {
 }
 
 /**
- * 
- * @param {*} params.vremeTrajanja 
- * @param {*} params.korak 
- * @param {*} params.time 
- * @param {*} params.dayIndex 
+ *
+ * @param {*} params.vremeTrajanja
+ * @param {*} params.korak
+ * @param {*} params.time
+ * @param {*} params.dayIndex
  */
 function populateDivs(params) {
   const {
