@@ -4,7 +4,8 @@
 
 }
 
-body {
+body,html {
+  height:100%;
   margin: 0px;
   padding: 0px;
   color: white;
@@ -221,6 +222,7 @@ div.right div.header {
 /* end of header */
 /* right calendar start */
 div.right-calendar-main {
+  height: 100%;
   flex-basis: 90%;
   display: flex;
   flex-direction: column;
@@ -260,7 +262,7 @@ div ul#cal-right-header li:last-child, ul.cal-right-body li:nth-of-type(9n) {
   border: none;
 }
 
-div ul#cal-right-header li div, ul.cal-right-body li div {
+div ul#cal-right-header li div, ul.cal-right-body li>div {
   display: flex;
   flex-direction: column;
   color: rgb(162, 162, 167);
@@ -290,7 +292,7 @@ ul.cal-right-body{
 ul.cal-right-body li{
   padding:0px;
 }
-ul.cal-right-body li div{
+ul.cal-right-body li>div{
 width: 100%;
 height: 100%;
 border-radius: 4px;
@@ -298,8 +300,28 @@ border-radius: 4px;
 ul.cal-right-body li div:hover{
 cursor:pointer;
 background-color:#90FED2 ;
+}
+ul.cal-right-body li>div{
+  display: flex;
+  flex-direction: column;
+}
+.time-div{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.fh, .sh{
+  color: #0576FD!important;
+  background-color: #B5FADF;
+  font-size:12px;
+  font-weight: 900;
+  flex-basis: 50%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-left: 5px solid #05FD9A;
 
 }
+
 
 /* right calender table body END*/
 /* right calender END */
