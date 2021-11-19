@@ -123,7 +123,7 @@ function setEventListenersForRow(calbodyLis, time) {
       //parent, minut, korak u kalendaru
       addDivs(this, 30, 30, nazivAktivnosti);
 
-      dodajAktivnostiUBazu(naziv, time, 30, formatDate(selectedDate), [])
+      dodajAktivnostiUBazu(nazivAktivnosti, time, 30, formatDate(selectedDate), [])
     });
   }
 }
@@ -339,7 +339,7 @@ function increaseMonth(monthId) {
 
 function formatDate(date) {
 
-  let stringic = date.getFullYear() + "." + date.getDate() + "." + (date.getMonth() + 1);
+  let stringic = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
   return stringic;
 }
 // postavi mesec koji je izabran
@@ -422,13 +422,14 @@ function procitajPredmeteZaKalendar() {
         console.log('testsssss', Math.floor(p.brojStrana * p.vremePoStrani / oduzmiDatume(Date.now(), Date.parse(p.kraj))));
 
         for (let index = 0; index < brojDana; index++) {
-          populateDivs({boja: randomBoja, vremeTrajanja: Math.floor(p.brojStrana * p.vremePoStrani / oduzmiDatume(Date.now(), Date.parse(p.kraj))) - 1, korak: 30, time: parseInt(p.kad), dayIndex: getDayIndex(new Date().addDays(index)), naziv: p.naziv })
+          populateDivs({ boja: randomBoja, vremeTrajanja: Math.floor(p.brojStrana * p.vremePoStrani / oduzmiDatume(Date.now(), Date.parse(p.kraj))) - 1, korak: 30, time: parseInt(p.kad), dayIndex: getDayIndex(new Date().addDays(index)), naziv: p.naziv })
         }
       })
     }
   });
 }
 procitajPredmeteZaKalendar()
+procitajAktivnosti()
 
 function roundToHalf(value) {
   var converted = parseFloat(value); // Make sure we have a number
@@ -441,16 +442,16 @@ function roundToHalf(value) {
     return (parseInt(converted, 10) + 0.5);
   }
 }
-function dodajAktivnostiUBazu(naziv, od, do1, pocetniDatum, danima) {
+function dodajAktivnostiUBazu(naziv, kad, trajanje, datum, danima) {
 
   $.ajax({
     type: "POST",
     url: "http://localhost/organizovanko/backend/aktivnost/dodaj.php",
     data: {
       naziv: naziv,
-      od: od,
-      do1: do1,
-      pocetniDatum: pocetniDatum,
+      kad: kad,
+      trajanje: trajanje,
+      datum: datum,
       danima: danima,
 
     },
@@ -473,4 +474,22 @@ Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
+}
+
+function procitajAktivnosti() {
+
+  $.ajax({
+    type: "GET",
+    url: "http://localhost/organizovanko/backend/aktivnost/procitaj.php",
+    dataType: "JSON",
+    success: function (response) {
+      const randomBoja = 'red';
+      response.forEach(aktivnost => {
+        console.log(Date.parse(aktivnost.datum))
+        populateDivs({ boja: randomBoja, vremeTrajanja: aktivnost.trajanje, korak: 30, time: parseInt(aktivnost.kad), dayIndex: getDayIndex(new Date(aktivnost.datum)), naziv: aktivnost.naziv })
+      })
+    }
+
+  });
+
 }

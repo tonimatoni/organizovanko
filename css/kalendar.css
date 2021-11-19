@@ -312,7 +312,7 @@ ul.cal-right-body li>div{
 }
 .fh, .sh{
   color: #0576FD!important;
-  background-color: #B5FADF;
+  background-color: red;
   font-size:12px;
   font-weight: 900;
   flex-basis: 50%;

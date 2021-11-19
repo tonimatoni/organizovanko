@@ -1,6 +1,6 @@
 <?php
 $storage = json_decode(file_get_contents("../storage.json"), true);
-$aktivnosti = $storage['aktivnosti']
+$aktivnosti = $storage['aktivnosti'];
 
 
 
@@ -13,19 +13,19 @@ $aktivnosti = $storage['aktivnosti']
 
 $id = generateRandomString(10);
 $naziv = $_POST['naziv'];
-$od = $_POST['od'];
-$do1= $_POST['do1'];
-$pocetniDatum = $_POST['pocetniDatum'];
+$kad = $_POST['kad'];
+$trajanje= $_POST['trajanje'];
+$datum = $_POST['datum'];
 $danima = $_POST['danima'];
 //      array?
 
-// Ovde pravimo objekat za novaAktivnost koji ce se dodati u bazu
+// Ovde pravimo objekat za novaAktivnost koji ce se dkadati u bazu
 $novaAktivnost = [
     'aktivnostId' => $id,
     'naziv' => $naziv,
-    'od' => $od,
-    'do1' => $do1,
-    'pocetniDatum' => $pocetniDatum,
+    'kad' => $kad,
+    'trajanje' => $trajanje,
+    'datum' => $datum,
     'danima' => $danima
 ];
 
