@@ -10,11 +10,18 @@ var leftArrowCalendar = document.getElementById('left-arrow');
 var rightArrowCalendar = document.querySelector('#right-arrow');
 //uzimamo lijeve iz liste i popunjavamo ih odredjenomim datumom
 const daysLi = document.getElementsByClassName('cal-body-cells');
+const calHeaderRightLi = document.querySelectorAll('#cal-right-header li');
+
 //addCalendarListeners(daysLi);
 leftArrowCalendar.addEventListener("click", navigateCalendar);
 rightArrowCalendar.addEventListener("click", navigateCalendar);
 window.onload = initializeCalendar;
 
+
+
+
+
+// dodajemo listenere na kalnedar
 function addCalendarListeners(lis){
   let dayCounter=1;
   let g=getThisMonthNumberOfDays();
@@ -26,6 +33,8 @@ function addCalendarListeners(lis){
 
   }
 }
+
+// klikom na neko polje u kalendaru, selektujemo danasnji datum
 function calendarClick(){
 let newDate = new Date(year, monthID, this.innerHTML);
 selectedDate=newDate;
@@ -62,6 +71,7 @@ function navigateCalendar() {
 
 // inicijalizuj kalendar na pocetku
 function initializeCalendar() {
+
   let now = new Date();
   monthID = now.getMonth();
   year = now.getFullYear();
@@ -71,7 +81,16 @@ function initializeCalendar() {
   setYear();
   setToday();
   setLeftDays();
+  setRightDays();
 
+
+
+}
+// postavlja datume u right kalendar u zavisnosti od levog kalendara
+function setRightDays(){
+  let dayIndex = getDayIndex();
+  console.log(dayIndex);
+  calHeaderRightLi[dayIndex].querySelector('p').innerHTML = selectedDate.getDate();
 
 
 }

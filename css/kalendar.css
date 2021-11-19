@@ -1,190 +1,310 @@
 /* global styles*/
-body{
+* {
+  box-sizing: border-box;
+
+}
+
+body {
   margin: 0px;
   padding: 0px;
-  color:white;
+  color: white;
   font-family: Inter;
 }
-ul{
+
+ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
-p{
-  margin:0px;
+
+p {
+  margin: 0px;
   padding: 0px;
 }
 
-
 /* main-container */
-main.main-container{
+main.main-container {
   width: 100%;
   background-color: white;
   display: flex;
-  height:100vh;
+  height: 100vh;
 }
 
 /* left div*/
-div.left{
-  width:40%;
-  background-color: rgb(24,24,27);
+div.left {
+  width: 20%;
+  background-color: rgb(24, 24, 27);
   flex-direction: row;
   padding-left: 15px;
-  padding-right: 15px;;
+  padding-right: 15px;
+  ;
 }
+
 /*header*/
-header{
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px 0px 0px 0px;
   margin-bottom: 15px;
 }
-header div.logo-div{
+
+header div.logo-div {
   width: 20%;
 }
-header .add-button span{
-  color:white;
+
+header .add-button span {
+  color: white;
   font-weight: 900;
-  background-color: rgb(45,45,48);
+  background-color: rgb(45, 45, 48);
   padding: 10px;
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 25%;
-  cursor:pointer;
+  cursor: pointer;
 }
+
 /* end of header */
-
 /* kalendar */
-
 /*kalendar header */
-.calendar-header{
+.calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  _color: rgb(204,204,205);
-  color:white;
+  _color: rgb(204, 204, 205);
+  color: white;
   font-size: 25px;
   font-family: Inter;
   font-weight: bold;
 }
-.calendar-header img{
-  width:25px;
+
+.calendar-header img {
+  width: 25px;
   height: 25px;
   vertical-align: middle;
   padding-left: 5px;
   padding-right: 5px;
   cursor: pointer;
-
 }
-.month span{
+
+.month span {
   color: red;
 }
-#month-name{
-  color:white;
+
+#month-name {
+  color: white;
   margin-right: 10px;
 }
-/* kalendar header END */
 
+/* kalendar header END */
 /*kalendar main start */
-div.calendar-main{
+div.calendar-main {
   margin-top: 20px;
-  color:#b3a788;
+  color: #b3a788;
 }
-.cal-header, .cal-body{
+
+.cal-header, .cal-body {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
   justify-content: space-between;
 }
-.cal-header li{
-  color:red;
+
+.cal-header li {
+  color: red;
 }
-.cal-header li, .cal-body li{
+
+.cal-header li, .cal-body li {
   width: 10.28%;
   text-align: center;
-  padding:5px;
+  padding: 5px;
   cursor: pointer;
 }
 
-div.break{
+div.break {
   flex-basis: 100%;
   height: 20px;
 }
-.cal-body{
-  color:white;
+
+.cal-body {
+  color: white;
   font-weight: 900;
 }
-.cal-body li.no-active{
-  color:#b3a788;
-  color:yellow;
-  cursor:alias;
 
+.cal-body li.no-active {
+  color: #b3a788;
+  color: yellow;
+  cursor: alias;
+  opacity: 1;
 }
-.cal-body li.today{
 
-
+.cal-body li.today {
   background-color: blue;
   border-radius: 50%;
 }
-.cal-body li.selected{
+
+.cal-body li.selected {
   background-color: cadetblue;
   border-radius: 50%;
 }
 
 /*kalendar main end */
-
-
 /* end of kalendar*/
-
 /*start of today*/
 div.danas {
   text-align: center;
-  color: rgb(59,130,246);
+  color: rgb(59, 130, 246);
   margin-bottom: 15px;
+
 }
 
-
-
 /* end of today*/
-
 /* start aktivnosti */
-
-div.aktivnosti{
-
+div.aktivnosti {
   display: flex;
   align-items: baseline;
 }
-div.aktivnosti .circle-div{
+
+div.aktivnosti .circle-div {
   margin-right: 10px;
 }
-div.aktivnosti span.circle{
+
+div.aktivnosti span.circle {
   display: inline-block;
-  width:15px;
+  width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: rgb(59,130,246);
+  background-color: rgb(59, 130, 246);
   vertical-align: top;
   margin-top: 2px;
 }
-.info-div .time{
-    vertical-align: top;
+
+.info-div .time {
+  vertical-align: top;
 }
-div.aktivnosti img{
+
+div.aktivnosti img {
   width: 18px;
   height: 18px;
 }
 
-
 /* end of aktivnosti */
-
 /*end of left div*/
-div.right{
-  width:80%;
+/*start of right div */
+div.right {
+  width: 80%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  color:black;
 }
 
+/* start of header */
+div.right div.header {
 
+  padding: 20px 0px;
+  font-weight: 700;
+  background-color: white;
+  flex-basis: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calendar-display-type {
+  padding: 10px;
+  background-color: red;
+  border-radius: 10px;
+}
+
+/* end of header */
+/* right calendar start */
+div.right-calendar-main {
+  flex-basis: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  flex-wrap: nowrap;
+
+}
+
+/* right calendar table header START*/
+div ul#cal-right-header {
+  display: flex;
+  flex-wrap: wrap;
+  _flex-grow:1;
+  flex-basis: 8.33%;
+
+
+}
+
+div ul#cal-right-header li, ul.cal-right-body li {
+  width: 12.5%;
+  _background-color: cadetblue;
+  border: 1px solid rgb(231, 231, 231);
+  padding-top: 2px;
+  padding-left: 5px;
+
+}
+
+div ul#cal-right-header li:first-child, ul.cal-right-body li:nth-of-type(9n+1) {
+  width: 6.25%;
+  _background-color: #E4CCC7;
+  border: none;
+}
+
+div ul#cal-right-header li:last-child, ul.cal-right-body li:nth-of-type(9n) {
+  width: 6.25%;
+  _background-color: #E4CCC7;
+  border: none;
+}
+
+div ul#cal-right-header li div, ul.cal-right-body li div {
+  display: flex;
+  flex-direction: column;
+  color: rgb(162, 162, 167);
+
+}
+
+div ul#cal-right-header li div span {
+  display: flex;
+  flex-direction: column;
+  color: rgb(162, 162, 167);
+  font-weight: 700;
+}
+
+div ul#cal-right-header li div p {
+  font-size: 25px;
+  font-weight: 700;
+  color: black;
+}
+/* right calender table header END */
+/* right calender table body START*/
+ul.cal-right-body{
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis:450px;
+  _height: 500px;
+}
+ul.cal-right-body li{
+  padding:0px;
+}
+ul.cal-right-body li div{
+width: 100%;
+height: 100%;
+border-radius: 4px;
+}
+ul.cal-right-body li div:hover{
+cursor:pointer;
+background-color:#90FED2 ;
+
+}
+
+/* right calender table body END*/
+/* right calender END */
+/* end of right div */
 /*helper classes*/
-.img-wrap img{
-  width:100%;
+.img-wrap img {
+  width: 100%;
 }
